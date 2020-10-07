@@ -22,6 +22,11 @@
                 <a class="nav-link" href="<c:url value='/create'/>">Добавить инцидент</a>
             </li>
         </ul>
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value='/delete'/>">Удалить инцидент</a>
+            </li>
+        </ul>
     </div>
 </div>
 <div class="container pt-3">
@@ -37,6 +42,7 @@
                         <th scope="col">Нарушение</th>
                         <th scope="col">Описание</th>
                         <th scope="col">Адрес</th>
+                        <th scope="col">Тип Нарушения</th>
                         <th scope="col">#</th>
                     </tr>
                     </thead>
@@ -46,6 +52,7 @@
                             <td><c:out value="${accident.name}"/></td>
                             <td><c:out value="${accident.text}"/></td>
                             <td><c:out value="${accident.address}"/></td>
+                            <td><c:out value="${accident.type.id}"/></td>
                             <td><a href="<c:url value='/update?id=${accident.id}'/>">Редактировать</a></td>
                         </tr>
                     </c:forEach>

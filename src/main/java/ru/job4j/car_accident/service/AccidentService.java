@@ -4,38 +4,47 @@ import org.springframework.stereotype.Service;
 import ru.job4j.car_accident.model.Accident;
 import ru.job4j.car_accident.model.AccidentType;
 import ru.job4j.car_accident.model.Rule;
-import ru.job4j.car_accident.store.AccidentMem;
-import java.util.Collection;
+import ru.job4j.car_accident.store.AccidentJdbcTemplate;
+import ru.job4j.car_accident.store.AccidentTypeJdbcTemplate;
+import ru.job4j.car_accident.store.RuleJdbcTemplate;
+
+import java.util.List;
 
 @Service
 public class AccidentService {
-    private final AccidentMem accidentMem;
+    private final AccidentJdbcTemplate jdbcTemplate;
+    private final AccidentTypeJdbcTemplate typeJdbc;
+    private final RuleJdbcTemplate ruleJdbc;
 
-    public AccidentService(AccidentMem accidentMem) {
-        this.accidentMem = accidentMem;
+    public AccidentService(AccidentJdbcTemplate jdbcTemplate,
+                           RuleJdbcTemplate ruleJdbc,
+                           AccidentTypeJdbcTemplate typeJdbc) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.ruleJdbc = ruleJdbc;
+        this.typeJdbc = typeJdbc;
     }
 
-    public void save(Accident accident, String[] rIds) {
-        accidentMem.create(accident, rIds);
+    public void saveOrUpdate(Accident accident, String[] rIds) {
+        jdbcTemplate.createOrReplace(accident, rIds);
     }
 
-    public void update(Accident accident) {
-        accidentMem.replace(accident);
+    public void delete(int id) {
+        jdbcTemplate.delete(id);
     }
 
-    public Collection<Accident> getAllAccidents() {
-        return accidentMem.getAll();
+    public List<Accident> getAllAccidents() {
+        return jdbcTemplate.getAllAccidents();
     }
 
     public Accident findByIdAccident(int id) {
-        return accidentMem.findById(id);
+        return jdbcTemplate.findAccidentById(id);
     }
 
-    public Collection<AccidentType> getAllTypes() {
-        return accidentMem.getTypes();
+    public List<AccidentType> getAllTypes() {
+        return typeJdbc.getAllAccidentType();
     }
 
-    public Collection<Rule> getAllRules() {
-        return accidentMem.getRules();
+    public List<Rule> getAllRules() {
+        return ruleJdbc.getRules();
     }
 }
