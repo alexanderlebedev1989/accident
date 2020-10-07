@@ -25,7 +25,8 @@ INSERT INTO rules (name) VALUES ('Статья 2');
 INSERT INTO rules (name) VALUES ('Статья 3');
 
 CREATE TABLE accidents_rules (
+    id SERIAL PRIMARY KEY,
     rules_id INT REFERENCES rules (id),
-    accident_id INT REFERENCES accidents (id),
-    PRIMARY KEY (rules_id, accident_id)
+    accident_id INT REFERENCES accidents (id)
+
 );
