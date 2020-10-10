@@ -1,16 +1,27 @@
 package ru.job4j.car_accident.model;
 
-import java.util.HashSet;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
+
+@Entity
+@Table(name = "accidents")
 public class Accident {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String text;
     private String address;
+
+    @ManyToOne
+    @JoinColumn(name = "type_id")
     private AccidentType type;
-    private Set<Rule> rules;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Rule> rules = new ArrayList<>();
 
     public Accident() {
 
@@ -20,6 +31,17 @@ public class Accident {
         this.name = name;
         this.text = text;
         this.address = address;
+    }
+
+    public Accident(String name, String text, String address, AccidentType type) {
+        this.name = name;
+        this.text = text;
+        this.address = address;
+        this.type = type;
+    }
+
+    private void addRule(Rule rule) {
+        rules.add(rule);
     }
 
     public int getId() {
@@ -62,11 +84,11 @@ public class Accident {
         this.type = type;
     }
 
-    public Set<Rule> getRules() {
+    public List<Rule> getRules() {
         return rules;
     }
 
-    public void setRules(Set<Rule> rules) {
+    public void setRules(List<Rule> rules) {
         this.rules = rules;
     }
 

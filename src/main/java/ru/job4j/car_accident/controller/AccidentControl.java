@@ -46,7 +46,8 @@ public class AccidentControl {
     @PostMapping("/delete")
     public String delete(HttpServletRequest req) {
         int id = Integer.parseInt(req.getParameter("id"));
-        service.delete(id);
+        Accident accident = service.findByIdAccident(id);
+        service.delete(accident);
         return "redirect:/";
     }
 }

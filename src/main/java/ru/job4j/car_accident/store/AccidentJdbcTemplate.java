@@ -3,14 +3,12 @@ package ru.job4j.car_accident.store;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
 import ru.job4j.car_accident.model.Accident;
 import ru.job4j.car_accident.model.Rule;
-
 import java.sql.PreparedStatement;
 import java.util.*;
 
-@Repository
+//@Repository
 public class AccidentJdbcTemplate {
     private final JdbcTemplate jdbc;
     private AccidentTypeJdbcTemplate typeJdbc;
@@ -25,7 +23,7 @@ public class AccidentJdbcTemplate {
     }
 
     public void createOrReplace(Accident accident, String[] rIds) {
-        Set<Rule> rules = ruleJdbc.createRules(rIds);
+        List<Rule> rules = ruleJdbc.createRules(rIds);
         accident.setRules(rules);
         if (accident.getId() == 0) {
             create(accident, rIds);

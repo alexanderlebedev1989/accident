@@ -5,12 +5,12 @@ import org.springframework.stereotype.Repository;
 import ru.job4j.car_accident.model.Accident;
 import ru.job4j.car_accident.model.Rule;
 
-import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Repository
+//@Repository
 public class RuleJdbcTemplate {
 
     private final JdbcTemplate jdbc;
@@ -26,8 +26,8 @@ public class RuleJdbcTemplate {
                         rs.getString("name")));
     }
 
-    public Set<Rule> createRules(String[] rIds) {
-        Set<Rule> rulesList = new HashSet<>();
+    public List<Rule> createRules(String[] rIds) {
+        List<Rule> rulesList = new ArrayList<>();
         for (String id : rIds) {
             String ruleName = findRuleId(Integer.parseInt(id)).getName();
             rulesList.add(Rule.of(Integer.parseInt(id), ruleName));
@@ -51,13 +51,13 @@ public class RuleJdbcTemplate {
         }
     }
 
-    public Set<Rule> findAllRulesForAccident(int id) {
+    public List<Rule> findAllRulesForAccident(int id) {
         List<Rule> list = jdbc.query("SELECT rules_id FROM accidents_rules WHERE accident_id = ?",
                 (rs, rowNum) -> {
                     Rule rule = findRuleId(rs.getInt("rules_id"));
                     return rule;
                 }, id);
-        return new HashSet<>(list);
+        return list;
     }
 
     public void delete(int id) {
