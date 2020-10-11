@@ -1,5 +1,6 @@
 package ru.job4j.car_accident.controller;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ public class AccidentControl {
     public String create(Model model) {
         model.addAttribute("types", service.getAllTypes());
         model.addAttribute("rules", service.getAllRules());
+        model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "accident/create";
     }
 
@@ -34,12 +36,14 @@ public class AccidentControl {
         model.addAttribute("types", service.getAllTypes());
         model.addAttribute("rules", service.getAllRules());
         model.addAttribute("accident", service.findByIdAccident(id));
+        model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "accident/update";
     }
 
     @GetMapping("/delete")
     public String delete(Model model) {
         model.addAttribute("accidents", service.getAllAccidents());
+        model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "accident/delete";
     }
 

@@ -27,6 +27,11 @@
                 <a class="nav-link" href="<c:url value='/delete'/>">Удалить инцидент</a>
             </li>
         </ul>
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value='/login?logout=true'/>">${user.username}| Выйти</a>
+            </li>
+        </ul>
     </div>
 </div>
 <div class="container pt-3">

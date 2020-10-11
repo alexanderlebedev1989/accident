@@ -73,7 +73,7 @@ public class AccidentHibernate {
         }
     }
 
-    private Rule findByRuleId(int id) {
+    public Rule findByRuleId(int id) {
         try(Session session = sf.openSession()) {
             return session.get(Rule.class, id);
         }

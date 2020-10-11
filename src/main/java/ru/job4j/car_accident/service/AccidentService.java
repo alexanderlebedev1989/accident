@@ -7,7 +7,6 @@ import ru.job4j.car_accident.model.Rule;
 import ru.job4j.car_accident.store.AccidentRepository;
 import ru.job4j.car_accident.store.AccidentsTypeRepository;
 import ru.job4j.car_accident.store.RulesRepository;
-
 import java.util.ArrayList;
 import java.util.List;
 
