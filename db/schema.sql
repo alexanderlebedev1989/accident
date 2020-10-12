@@ -31,14 +31,21 @@ CREATE TABLE accidents_rules (
 );
 
 CREATE TABLE users (
-  username VARCHAR(50) NOT NULL,
+  id serial primary key,
+  username VARCHAR(50) NOT NULL unique,
   password VARCHAR(100) NOT NULL,
   enabled boolean default true,
-  PRIMARY KEY (username)
+  authority_id int not null references authorities(id)
 );
 
+insert into authorities (authority) values ('ROLE_USER');
+insert into authorities (authority) values ('ROLE_ADMIN');
+
 CREATE TABLE authorities (
-  username VARCHAR(50) NOT NULL,
-  authority VARCHAR(50) NOT NULL,
-  FOREIGN KEY (username) REFERENCES users(username)
+  id serial primary key,
+  authority VARCHAR(50) NOT NULL unique
 );
+
+insert into users (username, password, authority_id)
+values ('root', '$2a$10$Xq9Hih0rYhzq3IV/47nzueegubhF72EoHWKGjTlYiE4D6UpWLKPzS',
+(select id from authorities where authority = 'ROLE_ADMIN'));
